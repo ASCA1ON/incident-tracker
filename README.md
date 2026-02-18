@@ -2,9 +2,82 @@
 
 A production-ready incident tracking system built with NestJS, React, PostgreSQL, and Prisma ORM. This application allows engineering teams to create, browse, search, filter, and manage production incidents with a clean, responsive UI.
 
+## 🌐 Live Demo (If Deployed)
+
+**Frontend:**  
+https://incident-tracker-gamma.vercel.app/
+
+**Backend API:**  
+https://incident-tracker-4ju6.onrender.com/
+
+---  
+
+### 🔐 SSL Configuration Note
+
+To allow connection with Supabase, SSL verification is currently relaxed using:
+
+NODE_TLS_REJECT_UNAUTHORIZED=0
+
+
+⚠️ This disables TLS certificate verification and is insecure.
+
+This configuration is being used for demonstration purposes only.
+
+---
+
+### ⏳ Render Free Tier Limitation
+
+The backend is deployed on Render (free tier).
+
+Free instances automatically spin down after inactivity.  
+If the service has been idle, the first request may take **30–60 seconds** to respond while the instance wakes up.
+
+Subsequent requests will respond normally once the service is active.
+
+---
+
+### 🚧 Production Readiness
+
+This project is built as a full-stack architecture demonstration.
+
+It is not production-ready in its current form.  
+The following improvements would be required for production use:
+
+- Proper SSL certificate validation
+- Authentication & authorization
+- Role-based access control
+- Rate limiting
+- Logging & monitoring
+- Infrastructure hardening
+
+The application is intended for portfolio and technical evaluation purposes.
+
+---
+
+# 📸 Application Screenshots
+
+## 📊 Incident Dashboard
+
+<img src="./screenshots/incident-list.png" width="900"/>
+
+---
+
+## ➕ Create Incident
+
+<img src="./screenshots/create-incident.png" width="900"/>
+
+---
+
+## 📝 Incident Details & Edit
+
+<img src="./screenshots/incident-details.png" width="900"/>
+
+---
+
 ## 🎯 Features
 
 ### Backend (NestJS)
+
 - ✅ RESTful API with proper validation
 - ✅ Server-side pagination with efficient queries
 - ✅ Advanced filtering (severity, status, service)
@@ -16,6 +89,7 @@ A production-ready incident tracking system built with NestJS, React, PostgreSQL
 - ✅ CORS enabled for frontend integration
 
 ### Frontend (React + Vite)
+
 - ✅ Responsive UI with TailwindCSS
 - ✅ Paginated incident table with loading states
 - ✅ Debounced search (1s delay)
@@ -30,6 +104,7 @@ A production-ready incident tracking system built with NestJS, React, PostgreSQL
 ## 🛠 Tech Stack
 
 ### Backend
+
 - **Framework**: NestJS (TypeScript)
 - **Database**: PostgreSQL (via Supabase free tier)
 - **ORM**: Prisma
@@ -37,6 +112,7 @@ A production-ready incident tracking system built with NestJS, React, PostgreSQL
 - **Runtime**: Node.js
 
 ### Frontend
+
 - **Framework**: React 18
 - **Build Tool**: Vite
 - **Styling**: TailwindCSS
@@ -79,6 +155,8 @@ cp .env.example .env
 
 # Edit .env and add your database URL
 DATABASE_URL="postgresql://postgres:[PASSWORD]@db.[PROJECT].supabase.co:5432/postgres?pgbouncer=true&sslmode=require"
+# if other that http://localhost:5173 or http://localhost:3000 add below
+FRONTEND_URL="http://localhost:5173"
 
 
 # Generate Prisma Client
@@ -116,6 +194,7 @@ The frontend will start on `http://localhost:5173`
 ## 📡 API Overview
 
 ### Base URL
+
 ```
 http://localhost:3000/api
 ```
@@ -123,9 +202,11 @@ http://localhost:3000/api
 ### Endpoints
 
 #### **GET /api/incidents**
+
 Fetch paginated incidents with filtering and sorting
 
 **Query Parameters:**
+
 - `page` (number, default: 1) - Page number
 - `limit` (number, default: 10) - Items per page
 - `search` (string) - Search in title, service, owner
@@ -136,6 +217,7 @@ Fetch paginated incidents with filtering and sorting
 - `sortOrder` (string) - Sort direction (asc, desc)
 
 **Response:**
+
 ```json
 {
   "data": [
@@ -161,14 +243,17 @@ Fetch paginated incidents with filtering and sorting
 ```
 
 #### **GET /api/incidents/:id**
+
 Get a single incident by ID
 
 **Response:** Single incident object
 
 #### **POST /api/incidents**
+
 Create a new incident
 
 **Request Body:**
+
 ```json
 {
   "title": "Service outage",
@@ -183,11 +268,13 @@ Create a new incident
 **Required fields:** `title`, `service`, `severity`
 
 #### **PATCH /api/incidents/:id**
+
 Update an existing incident
 
 **Request Body:** Partial incident object (any field)
 
 #### **DELETE /api/incidents/:id**
+
 Delete an incident
 
 **Response:** 200 OK
@@ -197,32 +284,38 @@ Delete an incident
 ### Backend Architecture
 
 **NestJS Framework Choice:**
+
 - Selected NestJS as it's the company's tech stack
 - Provides excellent TypeScript support and dependency injection
 - Built-in validation, exception handling, and modular architecture
 - Follows Angular-like patterns familiar to many developers
 
 **Prisma ORM:**
+
 - Type-safe database queries with auto-generated TypeScript types
 - Excellent migration system for database schema changes
 - Connection pooling and query optimization out of the box
 - Supports multiple databases (easy to switch from PostgreSQL if needed)
 
 **Database Indexes:**
+
 ```prisma
 @@index([service])
 @@index([severity])
 @@index([status])
 @@index([createdAt])
 ```
+
 These indexes significantly improve query performance for filtering and sorting operations.
 
 **Pagination Strategy:**
+
 - Offset-based pagination using `skip` and `take`
 - Parallel queries for data and count to minimize latency
 - Metadata includes total pages for better UX
 
 **Validation:**
+
 - Class-validator decorators on DTOs
 - Automatic validation via ValidationPipe
 - Whitelist option to strip unknown properties
@@ -231,6 +324,7 @@ These indexes significantly improve query performance for filtering and sorting 
 ### Frontend Architecture
 
 **Component Structure:**
+
 ```
 src/
 ├── api/              # API client and endpoints
@@ -241,22 +335,26 @@ src/
 ```
 
 **State Management:**
+
 - React Query for server state (caching, background updates)
 - Local state with useState for UI interactions
 - No global state needed due to React Query's caching
 
 **Performance Optimizations:**
+
 - Debounced search (1s) to reduce API calls
 - Query key invalidation for cache updates
 - Parallel API calls where possible
 - Lazy loading of routes (could be added)
 
 **Form Management:**
+
 - React Hook Form for performant, uncontrolled forms
 - Validation rules co-located with form fields
 - Dirty state tracking to prevent unnecessary saves
 
 **Styling Approach:**
+
 - TailwindCSS for utility-first styling
 - No component library to keep bundle size small
 - Consistent color scheme for severity and status badges
@@ -265,21 +363,26 @@ src/
 ## 🔍 Key Features Explained
 
 ### Server-Side Pagination
+
 All pagination logic happens on the backend to handle large datasets efficiently. The frontend only receives 10 items per page.
 
 ### Debounced Search
+
 Search input has a 1s debounce to avoid excessive API calls while typing. This provides a smooth UX while being backend-friendly.
 
 ### Optimistic UI Updates
+
 React Query handles cache invalidation automatically after mutations, ensuring the UI always shows the latest data.
 
 ### Error Handling
+
 - Backend: NestJS exception filters provide consistent error responses
 - Frontend: React Query error states trigger user-friendly error messages
 
 ## 🚧 Improvements with More Time
 
 ### Backend
+
 1. **Authentication & Authorization**
    - JWT-based auth
    - Role-based access control (admin, engineer, viewer)
@@ -312,6 +415,7 @@ React Query handles cache invalidation automatically after mutations, ensuring t
    - Monitoring with Datadog/NewRelic
 
 ### Frontend
+
 1. **UX Enhancements**
    - Infinite scroll option
    - Bulk operations (delete, update status)
@@ -348,6 +452,7 @@ React Query handles cache invalidation automatically after mutations, ensuring t
 ## 📝 Development Notes
 
 ### Database Migrations
+
 ```bash
 # Create a new migration
 npx prisma migrate dev --name description
@@ -360,12 +465,15 @@ npx prisma migrate reset
 ```
 
 ### Prisma Studio
+
 View and edit data with Prisma's GUI:
+
 ```bash
 npx prisma studio
 ```
 
 ### Build for Production
+
 ```bash
 # Backend
 cd backend
@@ -381,18 +489,77 @@ npm run preview
 ## 🐛 Troubleshooting
 
 **Database connection errors:**
+
 - Verify DATABASE_URL in .env
 - Check if Supabase project is active
 - Ensure IP is whitelisted in Supabase (default: allow all)
 
 **Port already in use:**
+
 - Backend: Change PORT in .env
 - Frontend: Vite will auto-increment to 5174
 
 **CORS errors:**
+
 - Check backend CORS configuration in main.ts
 - Ensure frontend API_URL matches backend URL
 
+# ⚠️ SSL Configuration Warning (PostgreSQL / Supabase)
+
+When running the backend, you may see the following warning:
+
+Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+
+Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
+
+## Why This Happens
+
+Supabase requires SSL connections.  
+In some local development setups, the connection fails unless SSL verification is relaxed.
+
+To make the database connection work locally, the following may have been used:
+
+NODE_TLS_REJECT_UNAUTHORIZED=0
+
+⚠️ **This disables TLS certificate verification and is NOT secure.**
+
+---
+
+## ✅ Recommended Fix (Safer Configuration)
+
+Instead of disabling TLS verification, update your database connection string.
+
+### Option 1 – Use `verify-full` (Recommended)
+
+```
+
+sslmode=verify-full
+
+```
+
+### Option 2 – Use libpq compatibility mode
+
+```
+
+uselibpqcompat=true&sslmode=require
+
+```
+
+Refer to official PostgreSQL SSL documentation:  
+https://www.postgresql.org/docs/current/libpq-ssl.html
+
+---
+
+## 🚨 Important Notes
+
+- `NODE_TLS_REJECT_UNAUTHORIZED=0` should only be used for local development.
+- Never use it in production.
+- Production deployments must enforce proper SSL certificate validation.
+
+```
+
+
 
 ## 👤 Author
-Akash 
+Akash
+```
