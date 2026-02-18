@@ -504,7 +504,7 @@ npm run preview
 - Check backend CORS configuration in main.ts
 - Ensure frontend API_URL matches backend URL
 
-# ⚠️ SSL Configuration Warning (PostgreSQL / Supabase)
+## ⚠️ SSL Configuration Warning (PostgreSQL / Supabase)
 
 When running the backend, you may see the following warning:
 
@@ -512,7 +512,7 @@ Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' ar
 
 Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
 
-## Why This Happens
+### Why This Happens
 
 Supabase requires SSL connections.  
 In some local development setups, the connection fails unless SSL verification is relaxed.
@@ -525,11 +525,11 @@ NODE_TLS_REJECT_UNAUTHORIZED=0
 
 ---
 
-## ✅ Recommended Fix (Safer Configuration)
+### ✅ Recommended Fix (Safer Configuration)
 
 Instead of disabling TLS verification, update your database connection string.
 
-### Option 1 – Use `verify-full` (Recommended)
+#### Option 1 – Use `verify-full` (Recommended)
 
 ```
 
@@ -537,7 +537,7 @@ sslmode=verify-full
 
 ```
 
-### Option 2 – Use libpq compatibility mode
+#### Option 2 – Use libpq compatibility mode
 
 ```
 
@@ -550,16 +550,15 @@ https://www.postgresql.org/docs/current/libpq-ssl.html
 
 ---
 
-## 🚨 Important Notes
+### 🚨 Important Notes
 
 - `NODE_TLS_REJECT_UNAUTHORIZED=0` should only be used for local development.
 - Never use it in production.
 - Production deployments must enforce proper SSL certificate validation.
 
-```
+
 
 
 
 ## 👤 Author
 Akash
-```
