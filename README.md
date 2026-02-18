@@ -2,7 +2,7 @@
 
 A production-ready incident tracking system built with NestJS, React, PostgreSQL, and Prisma ORM. This application allows engineering teams to create, browse, search, filter, and manage production incidents with a clean, responsive UI.
 
-## 🌐 Live Demo (If Deployed)
+## 🌐 Live Demo
 
 **Frontend:**  
 https://incident-tracker-gamma.vercel.app/
@@ -10,22 +10,7 @@ https://incident-tracker-gamma.vercel.app/
 **Backend API:**  
 https://incident-tracker-4ju6.onrender.com/
 
----  
-
-### 🔐 SSL Configuration Note
-
-To allow connection with Supabase, SSL verification is currently relaxed using:
-
-NODE_TLS_REJECT_UNAUTHORIZED=0
-
-
-⚠️ This disables TLS certificate verification and is insecure.
-
-This configuration is being used for demonstration purposes only.
-
----
-
-### ⏳ Render Free Tier Limitation
+#### ⏳ Render Free Tier Limitation
 
 The backend is deployed on Render (free tier).
 
@@ -36,23 +21,6 @@ Subsequent requests will respond normally once the service is active.
 
 ---
 
-### 🚧 Production Readiness
-
-This project is built as a full-stack architecture demonstration.
-
-It is not production-ready in its current form.  
-The following improvements would be required for production use:
-
-- Proper SSL certificate validation
-- Authentication & authorization
-- Role-based access control
-- Rate limiting
-- Logging & monitoring
-- Infrastructure hardening
-
-The application is intended for portfolio and technical evaluation purposes.
-
----
 
 # 📸 Application Screenshots
 
@@ -556,8 +524,38 @@ https://www.postgresql.org/docs/current/libpq-ssl.html
 - Never use it in production.
 - Production deployments must enforce proper SSL certificate validation.
 
+---  
+
+### 🔐 SSL Configuration Note
+
+To allow connection with Supabase, SSL verification is currently relaxed using:
+
+NODE_TLS_REJECT_UNAUTHORIZED=0
 
 
+⚠️ This disables TLS certificate verification and is insecure.
+
+This configuration is being used for demonstration purposes only.
+
+---
+
+### 🚧 Production Readiness
+
+This project is built as a full-stack architecture demonstration.
+
+It is not production-ready in its current form.  
+The following improvements would be required for production use:
+
+- Proper SSL certificate validation
+- Authentication & authorization
+- Role-based access control
+- Rate limiting
+- Logging & monitoring
+- Infrastructure hardening
+
+The application is intended for portfolio and technical evaluation purposes.
+
+---
 
 
 ## 👤 Author
